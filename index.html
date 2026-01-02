@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高一14班 · 青春不散场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23b8c5d6' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            color: #2c3e50;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #e74c3c;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        /* 寄语板块 */
+        .message-board {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .board-title {
+            font-size: 1.5rem;
+            color: #3498db;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .leave-message {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .leave-message input, .leave-message textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            resize: none;
+        }
+
+        .leave-message textarea {
+            height: 120px;
+        }
+
+        .leave-message button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .leave-message button:hover {
+            background-color: #2980b9;
+        }
+
+        /* 留言列表 */
+        .messages-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .message-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+            border-left: 3px solid #e74c3c;
+        }
+
+        .message-card .name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .message-card .text {
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .message-card .time {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            text-align: right;
+        }
+
+        /* 相册板块 */
+        .photo-album {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.03);
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .message-board, .photo-album {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部标题 -->
+        <div class="header">
+            <h1>高一14班 告别墙</h1>
+            <p>此去经年，应是良辰好景虚设。便纵有千种风情，更与何人说？</p>
+        </div>
+
+        <!-- 留言板块 -->
+        <div class="message-board">
+            <div class="board-title">📝 青春留言板</div>
+            <div class="leave-message">
+                <input type="text" id="nameInput" placeholder="你的名字">
+                <textarea id="msgInput" placeholder="想说的话..."></textarea>
+                <button onclick="addMessage()">提交留言</button>
+            </div>
+            <div class="messages-list" id="messagesContainer"></div>
+        </div>
+
+        <!-- 相册板块 -->
+        <div class="photo-album">
+            <div class="board-title">📷 时光相册</div>
+            <div class="photo-grid">
+                <div class="photo-item"><img src="https://picsum.photos/seed/photo1/400/300" alt="班级合照1"></div>
+                <div class="photo-item"><img src="https://picsum.photos/seed/photo2/400/300" alt="班级合照2"></div>
+                <div class="photo-item"><img src="https://picsum.photos/seed/photo3/400/300" alt="班级合照3"></div>
+                <div class="photo-item"><img src="https://picsum.photos/seed/photo4/400/300" alt="班级合照4"></div>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <div class="footer">
+            <p>高一14班 · 青春不散场 © 2026</p>
+        </div>
+    </div>
+
+    <script>
+        // 加载本地存储的留言
+        window.onload = function() {
+            loadMessages();
+        }
+
+        // 添加留言
+        function addMessage() {
+            const name = document.getElementById('nameInput').value.trim();
+            const text = document.getElementById('msgInput').value.trim();
+            if (!name || !text) {
+                alert('请填写名字和留言内容！');
+                return;
+            }
+
+            const now = new Date();
+            const time = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,0)}-${now.getDate().toString().padStart(2,0)} ${now.getHours().toString().padStart(2,0)}:${now.getMinutes().toString().padStart(2,0)}`;
+            
+            const message = {name, text, time};
+            let messages = JSON.parse(localStorage.getItem('class14Messages') || '[]');
+            messages.unshift(message);
+            localStorage.setItem('class14Messages', JSON.stringify(messages));
+
+            renderMessage(message);
+            document.getElementById('nameInput').value = '';
+            document.getElementById('msgInput').value = '';
+        }
+
+        // 渲染单条留言
+        function renderMessage(msg) {
+            const container = document.getElementById('messagesContainer');
+            const card = document.createElement('div');
+            card.className = 'message-card';
+            card.innerHTML = `
+                <div class="name">${msg.name}</div>
+                <div class="text">${msg.text}</div>
+                <div class="time">${msg.time}</div>
+            `;
+            container.appendChild(card);
+        }
+
+        // 加载所有留言
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('class14Messages') || '[]');
+            messages.forEach(msg => renderMessage(msg));
+        }
+    </script>
+</body>
+</html>
