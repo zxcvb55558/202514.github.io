@@ -3,36 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高一14班 · 青春不散场</title>
+    <title>高一14班 · 青春不散场 毕业纪念册</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: "Microsoft YaHei", "幼圆", sans-serif;
         }
 
         body {
             background-color: #f5f7fa;
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23b8c5d6' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            overflow-x: hidden;
+        }
+
+        /* 弹幕容器 */
+        .barrage-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .barrage-item {
+            position: absolute;
+            color: #e74c3c;
+            font-weight: bold;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+            white-space: nowrap;
+            animation: move linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(100vw);
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .header {
             text-align: center;
             padding: 40px 0;
             color: #2c3e50;
+            margin-bottom: 30px;
         }
 
         .header h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 10px;
             color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .header p {
@@ -40,8 +80,8 @@
             color: #7f8c8d;
         }
 
-        /* 寄语板块 */
-        .message-board {
+        /* 板块通用样式 */
+        .section {
             background: white;
             border-radius: 10px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
@@ -49,7 +89,7 @@
             margin-bottom: 30px;
         }
 
-        .board-title {
+        .section-title {
             font-size: 1.5rem;
             color: #3498db;
             border-left: 4px solid #3498db;
@@ -57,6 +97,7 @@
             margin-bottom: 20px;
         }
 
+        /* 留言板块 */
         .leave-message {
             display: flex;
             flex-direction: column;
@@ -91,7 +132,6 @@
             background-color: #2980b9;
         }
 
-        /* 留言列表 */
         .messages-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -104,6 +144,11 @@
             padding: 20px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.05);
             border-left: 3px solid #e74c3c;
+            transition: transform 0.2s;
+        }
+
+        .message-card:hover {
+            transform: translateY(-5px);
         }
 
         .message-card .name {
@@ -125,14 +170,6 @@
         }
 
         /* 相册板块 */
-        .photo-album {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -145,6 +182,7 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
         .photo-item img {
@@ -158,35 +196,123 @@
             transform: scale(1.03);
         }
 
-        /* 底部 */
+        /* 签名墙板块 */
+        .signature-board {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 300px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .signature-item {
+            position: absolute;
+            font-family: "KaiTi", "STKaiti", serif;
+            color: #2c3e50;
+            transform: rotate(var(--rotate, -5deg));
+            cursor: move;
+        }
+
+        .signature-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .signature-form input {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .signature-form button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .signature-form button:hover {
+            background-color: #c0392b;
+        }
+
+        /* 弹幕发送框 */
+        .barrage-send {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 999;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .barrage-send input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            width: 300px;
+        }
+
+        .barrage-send button {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .barrage-send button:hover {
+            background-color: #e67e22;
+        }
+
         .footer {
             text-align: center;
             padding: 20px 0;
             color: #7f8c8d;
             font-size: 0.9rem;
+            margin-top: 30px;
         }
 
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
-            .message-board, .photo-album {
+            .section {
                 padding: 20px;
+            }
+            .barrage-send input {
+                width: 200px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 弹幕容器 -->
+    <div class="barrage-container" id="barrageContainer"></div>
+
     <div class="container">
         <!-- 头部标题 -->
         <div class="header">
-            <h1>高一14班 告别墙</h1>
+            <h1>高一14班 毕业纪念册</h1>
             <p>此去经年，应是良辰好景虚设。便纵有千种风情，更与何人说？</p>
         </div>
 
         <!-- 留言板块 -->
-        <div class="message-board">
-            <div class="board-title">📝 青春留言板</div>
+        <div class="section message-board">
+            <div class="section-title">📝 青春留言板</div>
             <div class="leave-message">
                 <input type="text" id="nameInput" placeholder="你的名字">
                 <textarea id="msgInput" placeholder="想说的话..."></textarea>
@@ -195,14 +321,28 @@
             <div class="messages-list" id="messagesContainer"></div>
         </div>
 
-        <!-- 相册板块 -->
-        <div class="photo-album">
-            <div class="board-title">📷 时光相册</div>
+        <!-- 时光相册 -->
+        <div class="section photo-album">
+            <div class="section-title">📷 时光相册</div>
             <div class="photo-grid">
                 <div class="photo-item"><img src="https://picsum.photos/seed/photo1/400/300" alt="班级合照1"></div>
                 <div class="photo-item"><img src="https://picsum.photos/seed/photo2/400/300" alt="班级合照2"></div>
                 <div class="photo-item"><img src="https://picsum.photos/seed/photo3/400/300" alt="班级合照3"></div>
                 <div class="photo-item"><img src="https://picsum.photos/seed/photo4/400/300" alt="班级合照4"></div>
+                <div class="photo-item"><img src="https://picsum.photos/seed/photo5/400/300" alt="班级活动1"></div>
+                <div class="photo-item"><img src="https://picsum.photos/seed/photo6/400/300" alt="班级活动2"></div>
+            </div>
+        </div>
+
+        <!-- 签名墙 -->
+        <div class="section signature-wall">
+            <div class="section-title">✍️ 同学签名墙</div>
+            <div class="signature-board" id="signatureBoard" onclick="addSignatureByClick(event)">
+                <!-- 签名会动态生成在这里 -->
+            </div>
+            <div class="signature-form">
+                <input type="text" id="signatureName" placeholder="输入你的名字，点击签名墙添加">
+                <button onclick="addSignature()">点击添加签名</button>
             </div>
         </div>
 
@@ -212,10 +352,19 @@
         </div>
     </div>
 
+    <!-- 弹幕发送框 -->
+    <div class="barrage-send">
+        <input type="text" id="barrageInput" placeholder="发送毕业祝福弹幕...">
+        <button onclick="sendBarrage()">发射</button>
+    </div>
+
     <script>
-        // 加载本地存储的留言
+        // ================= 留言板功能 =================
         window.onload = function() {
             loadMessages();
+            loadSignatures();
+            // 自动播放历史弹幕
+            playHistoryBarrage();
         }
 
         // 添加留言
@@ -257,6 +406,141 @@
         function loadMessages() {
             const messages = JSON.parse(localStorage.getItem('class14Messages') || '[]');
             messages.forEach(msg => renderMessage(msg));
+        }
+
+        // ================= 签名墙功能 =================
+        // 随机旋转角度
+        function getRandomRotate() {
+            return (Math.random() * 10 - 5).toFixed(2);
+        }
+
+        // 点击添加签名
+        function addSignatureByClick(event) {
+            const name = document.getElementById('signatureName').value.trim();
+            if (!name) return;
+            const board = document.getElementById('signatureBoard');
+            const rect = board.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            createSignature(name, x, y);
+        }
+
+        // 按钮添加签名（随机位置）
+        function addSignature() {
+            const name = document.getElementById('signatureName').value.trim();
+            if (!name) {
+                alert('请输入你的名字！');
+                return;
+            }
+            const board = document.getElementById('signatureBoard');
+            const maxX = board.clientWidth - 100;
+            const maxY = board.clientHeight - 30;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            createSignature(name, x, y);
+        }
+
+        // 创建签名元素
+        function createSignature(name, x, y) {
+            const board = document.getElementById('signatureBoard');
+            const signature = document.createElement('div');
+            signature.className = 'signature-item';
+            signature.innerText = name;
+            signature.style.left = `${x}px`;
+            signature.style.top = `${y}px`;
+            signature.style.setProperty('--rotate', `${getRandomRotate()}deg`);
+            // 支持拖拽
+            signature.onmousedown = function(e) {
+                const dx = e.clientX - x;
+                const dy = e.clientY - y;
+                document.onmousemove = function(e2) {
+                    signature.style.left = `${e2.clientX - dx}px`;
+                    signature.style.top = `${e2.clientY - dy}px`;
+                }
+                document.onmouseup = function() {
+                    document.onmousemove = null;
+                }
+            }
+            board.appendChild(signature);
+            // 保存签名
+            saveSignature(name, x, y);
+            document.getElementById('signatureName').value = '';
+        }
+
+        // 保存签名到本地
+        function saveSignature(name, x, y) {
+            let signatures = JSON.parse(localStorage.getItem('class14Signatures') || '[]');
+            signatures.push({name, x, y, rotate: getRandomRotate()});
+            localStorage.setItem('class14Signatures', JSON.stringify(signatures));
+        }
+
+        // 加载签名
+        function loadSignatures() {
+            const signatures = JSON.parse(localStorage.getItem('class14Signatures') || '[]');
+            const board = document.getElementById('signatureBoard');
+            signatures.forEach(sig => {
+                const signature = document.createElement('div');
+                signature.className = 'signature-item';
+                signature.innerText = sig.name;
+                signature.style.left = `${sig.x}px`;
+                signature.style.top = `${sig.y}px`;
+                signature.style.setProperty('--rotate', `${sig.rotate}deg`);
+                board.appendChild(signature);
+            });
+        }
+
+        // ================= 弹幕功能 =================
+        // 发送弹幕
+        function sendBarrage() {
+            const text = document.getElementById('barrageInput').value.trim();
+            if (!text) return;
+            createBarrage(text);
+            // 保存弹幕到本地
+            saveBarrage(text);
+            document.getElementById('barrageInput').value = '';
+        }
+
+        // 创建弹幕元素
+        function createBarrage(text) {
+            const container = document.getElementById('barrageContainer');
+            const barrage = document.createElement('div');
+            barrage.className = 'barrage-item';
+            barrage.innerText = text;
+            // 随机位置和速度
+            const top = Math.random() * 80 + 10;
+            const duration = Math.random() * 10 + 10;
+            barrage.style.top = `${top}%`;
+            barrage.style.animationDuration = `${duration}s`;
+            container.appendChild(barrage);
+            // 动画结束后移除
+            setTimeout(() => {
+                barrage.remove();
+            }, duration * 1000);
+        }
+
+        // 保存弹幕到本地
+        function saveBarrage(text) {
+            let barrages = JSON.parse(localStorage.getItem('class14Barrages') || '[]');
+            barrages.push(text);
+            // 最多保存100条
+            if (barrages.length > 100) barrages.shift();
+            localStorage.setItem('class14Barrages', JSON.stringify(barrages));
+        }
+
+        // 播放历史弹幕
+        function playHistoryBarrage() {
+            const barrages = JSON.parse(localStorage.getItem('class14Barrages') || '[]');
+            barrages.forEach((text, index) => {
+                setTimeout(() => {
+                    createBarrage(text);
+                }, index * 2000);
+            });
+            // 循环播放
+            setInterval(() => {
+                if (barrages.length === 0) return;
+                const randomText = barrages[Math.floor(Math.random() * barrages.length)];
+                createBarrage(randomText);
+            }, 5000);
         }
     </script>
 </body>
